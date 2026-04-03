@@ -1,0 +1,163 @@
+:root {
+  --bg-dark: #0f172a;
+  --bg-glass: rgba(30, 41, 59, 0.7);
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-primary: #3b82f6;
+  --accent-primary-hover: #2563eb;
+  --success: #10b981;
+  --danger: #ef4444;
+  --danger-glass: rgba(239, 68, 68, 0.2);
+  --success-glass: rgba(16, 185, 129, 0.2);
+  --sidebar-w: 260px;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-dark);
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15), transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.1), transparent 25%);
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+}
+
+.glass-input {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-glass);
+  color: var(--text-main);
+  padding: 12px 16px;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.glass-input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.glass-button {
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.glass-button:hover {
+  background: var(--accent-primary-hover);
+  transform: translateY(-1px);
+}
+
+.glass-button.danger {
+  background: var(--danger-glass);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+.glass-button.danger:hover {
+  background: var(--danger);
+  color: white;
+}
+
+/* Layout */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: var(--sidebar-w);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 24px;
+  border-right: 1px solid var(--border-glass);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.main-content {
+  margin-left: var(--sidebar-w);
+  padding: 32px;
+  width: calc(100% - var(--sidebar-w));
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+}
+
+.nav-link.active {
+  border-left: 3px solid var(--accent-primary);
+}
+
+/* Tables */
+.glass-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.glass-table th, .glass-table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.glass-table th {
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge.income {
+  background: var(--success-glass);
+  color: var(--success);
+}
+
+.badge.expense {
+  background: var(--danger-glass);
+  color: var(--danger);
+}
