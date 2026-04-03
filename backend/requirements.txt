@@ -7,3 +7,4 @@ python-dotenv==1.0.1
 marshmallow==3.21.3
 pymongo==4.7.0
 gunicorn==21.2.0
+dnspython==2.6.1
