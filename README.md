@@ -11,45 +11,24 @@ I decided not to use a heavy "batteries-included" framework like Django and inst
 - **JWT Security:** Passwords are never stored in plain text. I used `Bcrypt` to salt and hash them, and `Flask-JWT-Extended` for stateless API token communication.
 - **Frontend Design:** The API is consumed by a React frontend. I designed it using pure "Glassmorphism" CSS (no Tailwind templates) to prove I can handle modern UI hierarchy and React Contexts.
 
-## How to Test the Project Locally
-
-I developed this using a local setup. You will need **Node.js** and **Python 3**.
-
-### 1. Database Setup
-Make sure MongoDB is running locally on the default port (`27017`). The database `finance_db` will automatically initialize as soon as you add the first piece of data!
-
-### 2. Start the Backend API
-Open a terminal in the `backend` folder:
-```bash
-python -m venv venv
-
-# For Windows:
-venv\Scripts\activate
-# For Mac / Linux:
-# source venv/bin/activate
-
-pip install -r requirements.txt
-python app.py
-```
-*(The API will be available at `http://127.0.0.1:5000`)*
-
-### 3. Start the Frontend UI
-In a completely separate terminal window, go to the `frontend` folder:
-```bash
-npm install
-npm run dev
-```
-*(Open the printed local link in your browser, usually `http://localhost:5173`)*
+## Live Demo
+Frontend UI: **[finance-dashboard-lyart-sigma.vercel.app]**
+Backend API: **[https://finance-backend-api-vn1t.onrender.com]**
 
 ---
 
 ### A Note for the Evaluator on Roles
 
-Because this uses a local setup, I didn't want you to have to run a complex database seeding script just to test the admin features. 
+To prove my Role-Based Access Control logic works without you having to seed a database, **the very first account registered into the MongoDB Cloud Database was automatically granted `admin` rights.** All accounts created after that are restricted to default `viewers`.
 
-To solve this smoothly: **The very first account that registers is automatically granted `admin` rights.** All accounts created after that will be restricted default `viewers`.
+Because I have already initialized the database, I set up a dedicated testing account for you to use. 
 
-So, to properly test the application, simply register a fresh account. You will instantly have full control to add expenses, look at the dashboard, and assign roles to other test users via the Users tab!
+**Admin Testing Credentials:**
+- **Email:** `[admin123@gmail.com]`
+- **Password:** `[admin123]`
+
+If you use those credentials to Sign In, you can add expenses, view the dashboard, and assign roles to other test users in the Users tab. 
+If you click 'Register' and create a brand new personal account, you can verify that the system correctly restricts your new account to 'viewer' status!
 
 ---
 *Thank you for taking the time to review my code! The backend was intentionally separated into distinct logic folders (routes, utils, config) to emulate a clean software engineering environment.*
