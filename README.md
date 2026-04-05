@@ -24,6 +24,10 @@ To prove my Role-Based Access Control logic works without you having to seed a d
 Because I have already initialized the database, I set up a dedicated testing account for you to use. 
 
 **Admin Testing Credentials:**
+- **Email:** `[admin123@gmail.com]`
+- **Password:** `[admin123]`
+
+**Analyst testing Credentials:**
 - **Email:** `[finance123@gmail.com]`
 - **Password:** `[finance123]`
 
