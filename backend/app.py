@@ -8,9 +8,14 @@ from routes.records import records_bp
 from routes.dashboard import dashboard_bp
 from dotenv import load_dotenv
 
+from pathlib import Path
+
 # Application Factory pattern: Allows us to create different instances of the app (like for testing)
 def create_app(config_class=Config):
-    load_dotenv()
+    # Ensure .env is loaded correctly regardless of starting path
+    env_path = Path(__file__).parent / '.env'
+    load_dotenv(dotenv_path=env_path)
+    
     app = Flask(__name__)
     app.config.from_object(config_class)
 
@@ -36,6 +41,15 @@ def create_app(config_class=Config):
     @app.errorhandler(500)
     def handle_500(e):
         return jsonify({"error": "Internal Server Error"}), 500
+
+    @app.route("/health")
+    def health_check():
+        try:
+            # Quick check to see if database is reachable
+            mongo.db.command('ping')
+            return jsonify({"status": "healthy", "database": "connected"}), 200
+        except Exception as e:
+            return jsonify({"status": "unhealthy", "error": str(e)}), 500
 
     return app
 

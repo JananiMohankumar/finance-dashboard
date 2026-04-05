@@ -24,8 +24,8 @@ To prove my Role-Based Access Control logic works without you having to seed a d
 Because I have already initialized the database, I set up a dedicated testing account for you to use. 
 
 **Admin Testing Credentials:**
-- **Email:** `[admin123@gmail.com]`
-- **Password:** `[admin123]`
+- **Email:** `[finance123@gmail.com]`
+- **Password:** `[finance123]`
 
 If you use those credentials to Sign In, you can add expenses, view the dashboard, and assign roles to other test users in the Users tab. 
 If you click 'Register' and create a brand new personal account, you can verify that the system correctly restricts your new account to 'viewer' status!

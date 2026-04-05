@@ -7,6 +7,7 @@ const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'];
 const Dashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -15,6 +16,7 @@ const Dashboard = () => {
         setData(response.data);
       } catch (err) {
         console.error(err);
+        setError(err.response?.data?.error || 'Could not connect to the backend server. Please check if the API is running.');
       } finally {
         setLoading(false);
       }
@@ -22,8 +24,15 @@ const Dashboard = () => {
     fetchDashboard();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (!data) return <div>Error loading dashboard</div>;
+  if (loading) return <div className="glass-panel" style={{ padding: '24px' }}>Loading dashboard data...</div>;
+  if (error) return (
+    <div className="glass-panel" style={{ padding: '24px', borderLeft: '4px solid var(--danger)' }}>
+      <h3 style={{ color: 'var(--danger)', marginTop: 0 }}>Error Loading Dashboard</h3>
+      <p style={{ color: 'var(--text-muted)' }}>{error}</p>
+      <button className="glass-button" onClick={() => window.location.reload()}>Retry</button>
+    </div>
+  );
+  if (!data) return <div>No data available.</div>;
 
   const expCategories = data.by_category.filter(c => c.type === 'expense');
 

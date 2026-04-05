@@ -1,17 +1,29 @@
 import os
 from pymongo import MongoClient
+from dotenv import load_dotenv
+from pathlib import Path
 
-# Use the exact Mongo URI from the user's Render setup
-MONGO_URI = "mongodb+srv://jananimohan:janani2004@cluster0.lnpz75r.mongodb.net/finance_db?retryWrites=true&w=majority"
-client = MongoClient(MONGO_URI)
-db = client.get_database("finance_db")
+# Explicitly load .env from the backend directory to avoid path issues
+env_path = Path(__file__).parent / 'backend' / '.env'
+load_dotenv(dotenv_path=env_path)
 
-# Delete all users
-result = db.users.delete_many({})
-print("Deleted users:", result.deleted_count)
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/finance_db")
 
-# Delete all records just in case
-result2 = db.records.delete_many({})
-print("Deleted records:", result2.deleted_count)
+try:
+    client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
+    # The 'admin' database command below checks if the connection is actually valid
+    client.admin.command('ping')
+    db = client.get_database("finance_db")
 
-print("Database completely reset! Ready for a new Admin.")
+    result = db.users.delete_many({})
+    print(f"Cleanup Successful: Deleted {result.deleted_count} users")
+
+    result2 = db.records.delete_many({})
+    print(f"Cleanup Successful: Deleted {result2.deleted_count} records")
+
+    print("\nDatabase completely reset and ready for new data!")
+
+except Exception as e:
+    print(f"\nERROR: Could not connect to MongoDB.")
+    print(f"Details: {str(e)}")
+    print("\nCheck if your MONGO_URI is correct and your MongoDB server is running.")

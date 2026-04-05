@@ -26,6 +26,8 @@ def get_records():
     for record in records_cursor:
         record['_id'] = str(record['_id'])
         record['created_by'] = str(record.get('created_by'))
+        if 'date' in record and isinstance(record['date'], datetime):
+            record['date'] = record['date'].isoformat()
         records.append(record)
         
     return jsonify(records), 200

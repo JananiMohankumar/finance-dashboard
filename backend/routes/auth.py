@@ -12,7 +12,10 @@ def register():
     if not data or not data.get('username') or not data.get('email') or not data.get('password'):
         return jsonify({"error": "Missing required fields"}), 400
 
-    existing_user = mongo.db.users.find_one({"email": data['email']})
+    # Normalize email to lowercase
+    email = data['email'].lower().strip()
+
+    existing_user = mongo.db.users.find_one({"email": email})
     if existing_user:
         return jsonify({"error": "User with this email already exists"}), 409
 
@@ -28,7 +31,7 @@ def register():
 
     new_user = {
         "username": data['username'],
-        "email": data['email'],
+        "email": email,
         "password_hash": hashed_pw,
         "role": role,
         "is_active": True
@@ -43,11 +46,15 @@ def login():
     if not data or not data.get('email') or not data.get('password'):
         return jsonify({"error": "Missing email or password"}), 400
 
-    user = mongo.db.users.find_one({"email": data['email']})
+    email = data['email'].lower().strip()
+    user = mongo.db.users.find_one({"email": email})
+    
     if not user:
+        print(f"DEBUG: Login failed - User not found for email: {email}")
         return jsonify({"error": "Invalid credentials"}), 401
 
     if not bcrypt.check_password_hash(user['password_hash'], data['password']):
+        print(f"DEBUG: Login failed - Password mismatch for email: {email}")
         return jsonify({"error": "Invalid credentials"}), 401
 
     if not user.get('is_active', True):

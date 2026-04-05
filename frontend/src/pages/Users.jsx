@@ -18,7 +18,11 @@ const Users = () => {
       const res = await api.get('/users/');
       setUsersList(res.data);
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to fetch users');
+      if (!err.response) {
+        setError('Network Error: Could not connect to the backend server.');
+      } else {
+        setError(err.response?.data?.error || 'Failed to fetch users');
+      }
     } finally {
       setLoading(false);
     }

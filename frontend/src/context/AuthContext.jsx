@@ -24,8 +24,19 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (username, email, password) => {
-    await api.post('/auth/register', { username, email, password });
-    await login(email, password); // auto login
+    try {
+      await api.post('/auth/register', { username, email, password });
+    } catch (err) {
+      throw err; // Re-throw to be caught by the component (e.g., Login.jsx)
+    }
+
+    try {
+      await login(email, password); // auto login
+    } catch (err) {
+      const loginError = new Error('Registration successful, but auto-login failed. Please try signing in manually.');
+      loginError.response = err.response;
+      throw loginError;
+    }
   };
 
   const logout = () => {

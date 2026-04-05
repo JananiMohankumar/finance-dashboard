@@ -76,7 +76,7 @@ const Records = () => {
           <tbody>
             {records.map(r => (
               <tr key={r._id}>
-                <td>{new Date(r.date).toLocaleDateString()}</td>
+                <td>{r.date ? new Date(r.date).toLocaleDateString() : 'N/A'}</td>
                 <td><span className={`badge ${r.type}`}>{r.type}</span></td>
                 <td>{r.category}</td>
                 <td>{r.notes}</td>
